@@ -22,21 +22,25 @@ class Grid:
 
         self.tiles = []
         for i in range(self.width):
+            row = []
             for j in range(self.height):
                 x = i*size + x_offset
                 y = j*size + y_offset
                 tile = Tile(self.screen, x, y, size, size, 0.2)
-                self.tiles.append(tile)
+                row.append(tile)
+            self.tiles.append(row)
     
     def update(self, mouse):
-        for tile in self.tiles:
-            if tile.rect.collidepoint(mouse.pos):
-                tile.color = (128, 128, 128)
-                if mouse.left_click:
-                    tile.show()
-            else:
-                tile.color = tile.og_color
+        for row in self.tiles:
+            for tile in row:
+                if tile.rect.collidepoint(mouse.pos):
+                    tile.color = (128, 128, 128)
+                    if mouse.left_click:
+                        tile.show()
+                else:
+                    tile.color = tile.og_color
 
     def draw(self):
-        for tile in self.tiles:
-            tile.draw()
+        for row in self.tiles:
+            for tile in row:
+                tile.draw()
